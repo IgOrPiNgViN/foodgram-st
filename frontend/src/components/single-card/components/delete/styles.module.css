@@ -1,0 +1,17 @@
+.delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.delete svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: #666;
+}
+
+.delete:hover svg {
+    stroke: #ff4d4d;
+}

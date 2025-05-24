@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .component {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список покупок</h1>
+    {% for item in components %}
+    <div class="component">
+        {{ item.component__title }} ({{ item.component__unit }}) — {{ item.total_quantity }}
+    </div>
+    {% endfor %}
+</body>
+</html>

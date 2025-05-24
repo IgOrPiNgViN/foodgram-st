@@ -1,0 +1,15 @@
+.amount {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.value {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.unit {
+    font-size: 14px;
+    color: #666;
+}
