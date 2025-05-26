@@ -5,9 +5,9 @@ from django.core.files import File
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 django.setup()
 from django.contrib.auth.hashers import make_password  # noqa: E402
-from ingredient.models import Ingredient  # noqa: E402
-from recipe.models import Recipe, RecipeIngredient  # noqa: E402
-from user.models import User  # noqa: E402
+from ingredient_list.models import Ingredient  # noqa: E402
+from recipe_book.models import Recipe, RecipeIngredient  # noqa: E402
+from user_management.models import User  # noqa: E402
 
 def create_test_data():
     print("Creating test data...")

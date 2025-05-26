@@ -7,10 +7,10 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
 from .constants import SHORT_LINK_LETTERS
-from core.models import FavoriteRecipe, ShoppingCart, ShortLink
-from ingredient.models import Ingredient
-from user.serializers import CustomUserSerializer
-from .models import Recipe, RecipeIngredient
+from core.models import ShortLink
+from ingredient_list.models import Ingredient
+from user_management.serializers import CustomUserSerializer
+from .models import Recipe, RecipeIngredient, RecipeFavorite, ShoppingList
 
 
 class IngredientInRecipeSerializer(serializers.ModelSerializer):
@@ -61,7 +61,7 @@ class RecipeListSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         return (
             not (not request or request.user.is_anonymous)
-            and FavoriteRecipe.objects.filter(
+            and RecipeFavorite.objects.filter(
                 user=request.user, recipe=obj
             ).exists()
         )
@@ -70,7 +70,7 @@ class RecipeListSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         return (
             not (not request or request.user.is_anonymous)
-            and ShoppingCart.objects.filter(
+            and ShoppingList.objects.filter(
                 user=request.user, recipe=obj
             ).exists()
         )

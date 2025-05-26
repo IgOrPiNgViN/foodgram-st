@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .filters import RecipeFilter
-from .models import Favorite, Recipe, ShoppingCart, RecipeIngredient
+from .models import RecipeFavorite, Recipe, ShoppingList, RecipeIngredient
 from .permissions import IsAuthorOrReadOnly
 from .serializers import (
     RecipeCreateSerializer,
@@ -38,8 +38,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def favorite(self, request, pk=None):
         if request.method == "POST":
-            return self._add_to(Favorite, request.user, pk)
-        return self._remove_from(Favorite, request.user, pk)
+            return self._add_to(RecipeFavorite, request.user, pk)
+        return self._remove_from(RecipeFavorite, request.user, pk)
 
     @action(
         detail=True,
@@ -48,8 +48,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def shopping_cart(self, request, pk=None):
         if request.method == "POST":
-            return self._add_to(ShoppingCart, request.user, pk)
-        return self._remove_from(ShoppingCart, request.user, pk)
+            return self._add_to(ShoppingList, request.user, pk)
+        return self._remove_from(ShoppingList, request.user, pk)
 
     def _add_to(self, model, user, pk):
         if model.objects.filter(user=user, recipe__id=pk).exists():
@@ -79,7 +79,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def download_shopping_cart(self, request):
         ingredients = (
             RecipeIngredient.objects.filter(
-                recipe__shopping_cart__user=request.user
+                recipe__in_shopping_lists__user=request.user
             )
             .values("ingredient__name", "ingredient__measurement_unit")
             .annotate(amount=Sum("amount"))

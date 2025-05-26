@@ -2,9 +2,8 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
-from core.models import Subscription
-from recipe.models import Recipe
-from .models import User
+from .models import User, Subscription
+from recipe_book.models import Recipe
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
@@ -42,7 +41,7 @@ class CustomUserSerializer(UserSerializer):
         if not request or request.user.is_anonymous:
             return False
         return Subscription.objects.filter(
-            user=request.user, subscribed_to=obj
+            user=request.user, author=obj
         ).exists()
 
 
@@ -51,7 +50,7 @@ class RecipeMinifiedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ("id", "name", "image", "cooking_time")
+        fields = ("id", "title", "image", "cooking_time")
 
 
 class UserWithRecipesSerializer(CustomUserSerializer):
@@ -67,7 +66,7 @@ class UserWithRecipesSerializer(CustomUserSerializer):
     def get_recipes(self, obj):
         request = self.context.get("request")
         recipes_limit = request.query_params.get("recipes_limit")
-        recipes = obj.recipes.all()
+        recipes = obj.created_recipes.all()
 
         if recipes_limit:
             recipes = recipes[: int(recipes_limit)]
@@ -77,7 +76,7 @@ class UserWithRecipesSerializer(CustomUserSerializer):
         ).data
 
     def get_recipes_count(self, obj):
-        return obj.recipes.count()
+        return obj.created_recipes.count()
 
 
 class SetAvatarSerializer(serializers.ModelSerializer):

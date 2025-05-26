@@ -7,9 +7,9 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 
-from ingredient.views import IngredientViewSet
-from recipe.views import RecipeViewSet
-from user.views import CustomUserViewSet, UserAvatarView
+from ingredient_list.views import IngredientViewSet
+from recipe_book.views import RecipeViewSet
+from user_management.views import CustomUserViewSet, UserAvatarView
 from .views import health
 
 # DRF API Router

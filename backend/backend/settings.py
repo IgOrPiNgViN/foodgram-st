@@ -24,9 +24,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'drf_yasg',
-    'users',
-    'recipes',
-    'ingredients',
+    'user_management',
+    'recipe_book',
+    'ingredient_list',
 ]
 
 MIDDLEWARE = [
@@ -101,7 +101,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user_management.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -118,9 +118,9 @@ DJOSER = {
     'LOGIN_FIELD': 'email',
     'HIDE_USERS': False,
     'SERIALIZERS': {
-        'user_create': 'users.serializers.CustomUserCreateSerializer',
-        'user': 'users.serializers.CustomUserSerializer',
-        'current_user': 'users.serializers.CustomUserSerializer',
+        'user_create': 'user_management.serializers.CustomUserCreateSerializer',
+        'user': 'user_management.serializers.CustomUserSerializer',
+        'current_user': 'user_management.serializers.CustomUserSerializer',
     },
     'PERMISSIONS': {
         'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly'],
