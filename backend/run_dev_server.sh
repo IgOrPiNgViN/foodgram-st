@@ -19,7 +19,6 @@ if [ ! -d static_backend ]; then
   mkdir -p static_backend/media
 fi
 
-
 echo "Launching load_ingredients script"
 python3 load_ingredients.py && echo "Ok" || echo "ERROR"
 
@@ -31,11 +30,8 @@ fi
 echo "Running server..."
 echo "Debug: $DEBUG"
 
-# python3 manage.py runserver
 if [ -z "$DEBUG" ] || [ "$DEBUG" -eq 1 ] ; then
-  # "DEBUG"
   python3 manage.py runserver "0:8000"
 else
-  # "PROD"
   python3 -m gunicorn --bind 0.0.0.0:8000 backend.wsgi
 fi

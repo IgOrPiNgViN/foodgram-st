@@ -147,10 +147,8 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
                     ]
                 }
             )
-        # Update recipe fields
         super().update(instance, validated_data)
         instance.save()
-        # Update ingredients if provided
         instance.recipe_ingredients.all().delete()
         recipe_ingredients = self.recipe_ingredients_by_data(
             instance, ingredients_data

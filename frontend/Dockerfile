@@ -1,4 +1,7 @@
 FROM node:21.7.1-alpine
+
+LABEL maintainer="pupslchek <https://github.com/IgOrPiNgViN/foodgram-st>"
+
 WORKDIR /app
 
 COPY package.json package.json

@@ -11,42 +11,34 @@ from user_management.models import User  # noqa: E402
 
 def create_test_data():
     print("Creating test data...")
-    user1, created1 = User.objects.get_or_create(
-        email="user1@example.com",
-        defaults={
-            "username": "admin_user",
-            "first_name": "Admin",
-            "last_name": "User",
-            "password": make_password("password123"),
-            "is_staff": True,
-            "is_superuser": True,
-        },
+    # Создаем пользователей
+    admin = User.objects.create_user(
+        username='test_admin',
+        email='test_admin@foodgram.local',
+        password='admin123',
+        first_name='Admin',
+        last_name='User'
     )
-    if created1:
-        avatar_path = Path("data/demo_avatar_1.png")
-        with open(avatar_path, "rb") as f:
-            user1.avatar.save("demo_avatar_1.jpg", File(f), save=True)
-        print(f"Created administrator user: {user1.email}")
-    else:
-        print(f"User {user1.email} already exists")
-    user2, created2 = User.objects.get_or_create(
-        email="user2@example.com",
-        defaults={
-            "username": "regular_user",
-            "first_name": "Regular",
-            "last_name": "User",
-            "password": make_password("password123"),
-            "is_staff": False,
-            "is_superuser": False,
-        },
+    print(f"Created admin user: {admin.username}")
+
+    user1 = User.objects.create_user(
+        username='test_user1',
+        email='test_user1@foodgram.local',
+        password='user123',
+        first_name='Test',
+        last_name='User1'
     )
-    if created2:
-        avatar_path = Path("data/demo_avatar_2.png")
-        with open(avatar_path, "rb") as f:
-            user2.avatar.save("demo_avatar_2.png", File(f), save=True)
-        print(f"Created regular user: {user2.email}")
-    else:
-        print(f"User {user2.email} already exists")
+    print(f"Created user: {user1.username}")
+
+    user2 = User.objects.create_user(
+        username='test_user2',
+        email='test_user2@foodgram.local',
+        password='user123',
+        first_name='Test',
+        last_name='User2'
+    )
+    print(f"Created user: {user2.username}")
+
     user3, created3 = User.objects.get_or_create(
         email="user3@example.com",
         defaults={
@@ -80,7 +72,7 @@ def create_test_data():
     hot_chocolate, created_hc = Recipe.objects.get_or_create(
         name="Горячий шоколад",
         defaults={
-            "author": user1,
+            "author": admin,
             "text": "Вкуснейший горячий шоколад с корицей - "
             "идеальный напиток для холодного вечера. "
             "Приготовьте напиток,"

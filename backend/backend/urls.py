@@ -12,13 +12,11 @@ from recipe_book.views import RecipeViewSet
 from user_management.views import CustomUserViewSet, UserAvatarView
 from .views import health
 
-# DRF API Router
 router = DefaultRouter()
 router.register("users", CustomUserViewSet, basename="users")
 router.register("recipes", RecipeViewSet, basename="recipes")
 router.register("ingredients", IngredientViewSet, basename="ingredients")
 
-# Schema view for Swagger documentation
 schema_view = get_schema_view(
     openapi.Info(
         title="Foodgram API",
@@ -33,7 +31,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api/auth/", include("djoser.urls.authtoken")),
-    # Documentation URLs
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),
